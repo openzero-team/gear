@@ -1204,6 +1204,7 @@ class BaseClient(BaseClientServer):
 
     def _checkTimeout(self, start_time, timeout):
         if time.time() - start_time > timeout:
+            self.connections_condition.release()
             raise TimeoutError()
 
     def waitForServer(self, timeout=None):
